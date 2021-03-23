@@ -189,3 +189,10 @@ cluster:
     servicemonitor:
       enabled: false
       prometheusInstance: default
+
+  ## Pod Disruption Budget
+  ## https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+  ##
+  podDisruptionBudget:
+    enabled: false
+    minAvailable: 2

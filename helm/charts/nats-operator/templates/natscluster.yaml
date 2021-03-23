@@ -68,3 +68,19 @@ spec:
     interval: 60s
 {{- end }}
 {{- end }}
+---
+{{- if and .Values.cluster.create .Values.cluster.podDisruptionBudget.enabled }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ .Values.cluster.name }}
+  {{- if and .Values.clusterScoped .Values.cluster.namespace }}
+  namespace: {{ .Values.cluster.namespace }}
+  {{- end }}
+spec:
+  minAvailable: {{ .Values.cluster.podDisruptionBudget.minAvailable }} # only .spec.minAvailable and integer values can be used with operators
+  selector:
+    matchLabels:
+      app: nats
+      nats_cluster: {{ .Values.cluster.name }}
+{{- end }}

@@ -1,6 +1,6 @@
 apiVersion: v2
 name: nats-operator
-version: 0.7.4
+version: 0.8.0
 appVersion: 0.7.4
 description: NATS operator creates/configures/manages nats clusters atop Kubernetes
 keywords:

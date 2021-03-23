@@ -1,0 +1,16 @@
+---
+{{- if .Values.podDisruptionBudget.enabled }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ template "stan.name" . }}
+  labels:
+    app: {{ template "stan.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+spec:
+  minAvailable: {{ .Values.podDisruptionBudget.minAvailable }}
+  selector:
+    matchLabels:
+      app: {{ template "stan.name" . }}
+      chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+{{- end }}

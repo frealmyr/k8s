@@ -129,6 +129,8 @@ their default values.
 | `cluster.metrics.repository`                 | Prometheus metrics exporter image name                                                       | `synadia/prometheus-nats-exporter`              |
 | `cluster.metrics.tag`                        | Prometheus metrics exporter image tag                                                        | `0.1.0`                                         |
 | `cluster.metrics.pullPolicy`                 | Prometheus metrics exporter image pull policy                                                | `IfNotPresent`                                  |
+| `cluster.podDisruptionBudget.enabled`        | Enable Pod Disruption Budget for NATS Cluster                                                | `false`                                         |
+| `cluster.podDisruptionBudget.minAvailable`   | Minimum number of replicas during voluntary disruptions                                      | `2`                                             |
 
 ### Example
 

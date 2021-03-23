@@ -525,6 +525,16 @@ affinity:
         topologyKey: "kubernetes.io/hostname"
 ```
 
+#### Pod Disruption Budget
+
+<https://kubernetes.io/docs/tasks/run-application/configure-pdb/>
+
+```yaml
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 2
+```
+
 #### Service topology
 
 [Service topology](https://kubernetes.io/docs/concepts/services-networking/service-topology/) is disabled by default, but can be enabled by setting `topologyKeys`. For example:

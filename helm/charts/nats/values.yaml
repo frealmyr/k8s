@@ -118,6 +118,13 @@ securityContext: null
 # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 
+# Pod Disruption Budget
+# https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+#
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 2
+
 # Service topology
 # ref: https://kubernetes.io/docs/concepts/services-networking/service-topology/
 topologyKeys: []

@@ -568,6 +568,16 @@ affinity:
         topologyKey: "kubernetes.io/hostname"
 ```
 
+#### Pod Disruption Budget
+
+<https://kubernetes.io/docs/tasks/run-application/configure-pdb/>
+
+```yaml
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 2
+```
+
 ### Name Overides
 
 Can change the name of the resources as needed with:

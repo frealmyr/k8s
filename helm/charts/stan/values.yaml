@@ -85,6 +85,13 @@ securityContext: null
 # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity: {}
 
+# Pod Disruption Budget
+# https://kubernetes.io/docs/tasks/run-application/configure-pdb/
+#
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 2
+
 # Resource requests and limits for primary stan container
 # ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 resources: {}
