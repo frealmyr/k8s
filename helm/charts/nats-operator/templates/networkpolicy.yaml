@@ -1,0 +1,78 @@
+{{- if .Values.cluster.networkPolicy.enabled }}
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: {{ .Values.cluster.name }}
+{{- if and .Values.clusterScoped .Values.cluster.namespace }}
+  namespace: {{ .Values.cluster.namespace }}
+{{- end }}
+spec:
+  podSelector:
+    matchLabels:
+      app: "nats"
+
+  ingress:
+    # Allow inbound connections from Prometheus in monitoring namespace
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+      ports:
+      - port: 7777
+
+    # Allow inbound connections from nats clients in same namespace
+    - ports:
+        - port: 4222 # nats clients
+          protocol: TCP
+      from:
+        - podSelector: {}
+
+    # Allow inbound connections between nats server pods
+    - ports:
+        - port: 6222 # nats cluster routing
+          protocol: TCP
+      from:
+        - podSelector:
+            matchLabels:
+              app: nats
+
+    # Allow custom inbound connections if defined
+    {{- with .Values.cluster.networkPolicy.additionalRules.ingress }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+
+  egress:
+    # Allow outbound connections to kube-dns
+    - ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+      to:
+        - namespaceSelector: {} # kube-system have no labels by default
+        - podSelector:
+            matchLabels:
+              k8s-app: kube-dns # Thus match on kube-dns podname for all namespaces
+
+    # Allow outbound connections to nats clients in same namespace
+    - ports:
+        - port: 4222 # nats clients
+          protocol: TCP
+      to:
+        - podSelector: {}
+
+    # Allow outbound connections between nats server pods
+    - ports:
+        - port: 6222 # nats cluster routing
+          protocol: TCP
+      to:
+        - podSelector:
+            matchLabels:
+              app: nats
+
+    # Allow custom outbound connections if defined
+    {{- with .Values.cluster.networkPolicy.additionalRules.egress }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+
+{{- end }}

@@ -189,3 +189,20 @@ cluster:
     servicemonitor:
       enabled: false
       prometheusInstance: default
+
+  ## NetworkPolicies
+  ## https://kubernetes.io/docs/concepts/services-networking/network-policies/
+  ##
+  networkPolicy:
+    enabled: false
+    # additionalRules:
+    #   ingress:
+    #     # Opens ingress from firebase functions. (and all of internet, in lack of a static ip)
+    #     - ports:
+    #         - port: 4222
+    #           protocol: TCP
+    #       from:
+    #         - ipBlock:
+    #             cidr: 0.0.0.0/0
+    #             except:
+    #               - 10.44.0.0/14
